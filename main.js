@@ -1,12 +1,13 @@
 // Controlling Constant
-const svgWidth = 780,
+const svgWidth = 1280,
   svgHeight = 600;
 const margin = { top: 20, right: 30, bottom: 30, left: 60 },
   width = svgWidth - margin.left - margin.right,
   height = svgHeight - margin.top - margin.bottom;
+const range = 100;
 
 // append the svg object to the body of the page
-var svg = d3
+const svg = d3
   .select("#stream")
   .append("svg")
   .attr("width", svgWidth)
@@ -16,11 +17,21 @@ var svg = d3
 
 // Parse the Data
 d3.csv(
-  "https://raw.githubusercontent.com/Phon1209/IV_Streamgraph/main/Modified_CSV/Phon_spending.csv",
+  "https://raw.githubusercontent.com/Phon1209/IV_Streamgraph/main/Modified_CSV/test.csv",
   function (data) {
     // List of groups = header of the csv files
-    const keys = data.columns.slice(1);
-    const parseMonth = d3.timeParse("%Y-%m");
+    // const keys = data.columns.slice(1);
+
+    const keys = [
+      "Transportation",
+      "Grocery",
+      "Everything else",
+      "Online Shopping",
+      "Dining",
+      "Online Services",
+      "Housing",
+    ];
+    const parseMonth = d3.timeParse("%Y-%m-%d");
 
     // Add X axis
     const x = d3
@@ -38,26 +49,25 @@ d3.csv(
       .call(d3.axisBottom(x));
 
     // Add Y axis
-    var y = d3.scaleLinear().domain([-10000, 10000]).range([height, 0]);
-    svg.append("g").call(d3.axisLeft(y));
+    const y = d3.scaleLinear().domain([-range, range]).range([height, 0]);
+    // svg.append("g").call(d3.axisLeft(y));
 
     // color palette
-    var color = d3
+    const color = d3
       .scaleOrdinal()
       .domain(keys)
       .range([
-        "#e41a1c",
-        "#377eb8",
-        "#4daf4a",
-        "#984ea3",
-        "#ff7f00",
-        "#ffff33",
-        "#a65628",
-        "#f781bf",
+        "#7fc97f",
+        "#beaed4",
+        "#fdc086",
+        "#ffff99",
+        "#386cb0",
+        "#f0027f",
+        "#bf5b17",
       ]);
 
     //stack the data?
-    var stackedData = d3.stack().offset(d3.stackOffsetSilhouette).keys(keys)(
+    const stackedData = d3.stack().offset(d3.stackOffsetSilhouette).keys(keys)(
       data
     );
 
@@ -83,6 +93,7 @@ d3.csv(
           .y1(function (d) {
             return y(d[1]);
           })
+          .curve(d3.curveBasis)
       );
   }
 );
