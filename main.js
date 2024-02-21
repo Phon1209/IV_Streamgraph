@@ -17,7 +17,7 @@ const svg = d3
 
 // Parse the Data
 d3.csv(
-  "https://raw.githubusercontent.com/Phon1209/IV_Streamgraph/main/Modified_CSV/test.csv",
+  "https://raw.githubusercontent.com/Phon1209/IV_Streamgraph/main/test2modify.csv",
   function (data) {
     // List of groups = header of the csv files
     // const keys = data.columns.slice(1);
@@ -76,7 +76,7 @@ d3.csv(
 
     // Add Y axis
     const y = d3.scaleLinear().domain([-range, range]).range([height, 0]);
-    // svg.append("g").call(d3.axisLeft(y));
+    svg.append("g").call(d3.axisLeft(y));
 
     //stack the data?
     const stackedData = d3.stack().offset(d3.stackOffsetSilhouette).keys(keys)(
