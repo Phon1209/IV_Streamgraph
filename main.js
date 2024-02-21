@@ -28,7 +28,7 @@ const pinnedtooltip = d3.select("body").append("div")
 
 // Parse the Data
 d3.csv(
-  "https://raw.githubusercontent.com/Phon1209/IV_Streamgraph/main/Christian_CSV+synthetic.py/Christian_modified_spending_days.csv",
+  "https://raw.githubusercontent.com/Phon1209/IV_Streamgraph/main/Modified_CSV/Phon_spending_daily.csv",
   function (data) {
     // List of groups = header of the csv files
     // const keys = data.columns.slice(1);
@@ -145,7 +145,7 @@ d3.csv(
             .style("font", "12px sans-serif")
             .style("border-radius", "8px")
             .style("left", (450) + "px")
-            .style("top", (75) + "px")
+            .style("top", (40) + "px")
             .style("background",color(d.key));
           svg.select("rect")  //selects the rectangle we did for background so we can change fill color to area we are currently hovering however much less opacity
             .attr("fill", color(d.key))
@@ -171,7 +171,7 @@ d3.csv(
             .style("font", "12px sans-serif")
             .style("border-radius", "8px")
             .style("left", (630) + "px")
-            .style("top", (75) + "px")
+            .style("top", (40) + "px")
             .style("background",color(d.key))
             .style("border", "2px solid black")
       .on('click', function() {
