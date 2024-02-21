@@ -31,7 +31,33 @@ d3.csv(
       "Online Services",
       "Housing",
     ];
+
+    // color palette
+    const color = d3
+      .scaleOrdinal()
+      .domain(keys)
+      .range([
+        "#7fc97f",
+        "#beaed4",
+        "#fdc086",
+        "#ffff99",
+        "#386cb0",
+        "#f0027f",
+        "#bf5b17",
+      ]);
+
     const parseMonth = d3.timeParse("%Y-%m-%d");
+    const labelContainer = d3.select("#label");
+    const labels = labelContainer
+      .selectAll("li")
+      .data(keys)
+      .enter()
+      .append("li")
+      .classed("label-item", true)
+      .classed("end", (d) => d === "Everything else");
+
+    labels.append("div").attr("style", (d) => `background-color: ${color(d)}`);
+    labels.append("p").text((d) => d);
 
     // Add X axis
     const x = d3
@@ -51,20 +77,6 @@ d3.csv(
     // Add Y axis
     const y = d3.scaleLinear().domain([-range, range]).range([height, 0]);
     // svg.append("g").call(d3.axisLeft(y));
-
-    // color palette
-    const color = d3
-      .scaleOrdinal()
-      .domain(keys)
-      .range([
-        "#7fc97f",
-        "#beaed4",
-        "#fdc086",
-        "#ffff99",
-        "#386cb0",
-        "#f0027f",
-        "#bf5b17",
-      ]);
 
     //stack the data?
     const stackedData = d3.stack().offset(d3.stackOffsetSilhouette).keys(keys)(
